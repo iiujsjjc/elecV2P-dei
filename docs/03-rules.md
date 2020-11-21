@@ -1,26 +1,27 @@
-```
+# 03-rules
+
+```text
 最近更新： 2020-7-16
 适用版本： 2.1.0
 ```
 
 ## modify 规则集 格式说明
 
-|   匹配方式   |    匹配内容（正则）   |  修改方式 |       修改内容      |  修改时间
- :-----------: | --------------------- | :-------: | ------------------- | ----------
-| ip           | 192.168.1.1           | 301/302   | https://google.com  |  前(req)
-| url          | ^https://api.b.com/v2 | JS        | file.js             |  后(res)
-| host         | api.bilibili.com      | useragent | iPhone 6s           |  
-| useragent    | neteaseMusic | aliApp | block     | reject|tinyimg
-| reqmethod    | GET|POST|PUT|DELETE   | $HOLD     | 30
-| reqbody      | queryPara|word string |           |
-| resstatus    | 200 | 404 | 301 | ... |           |
-| restype      | text/html | text/json | -----     |
-| resbody      | Keyword(string)       | all - JS  |
-
+| 匹配方式 | 匹配内容（正则） | 修改方式 | 修改内容 | 修改时间 |  |  |
+| :---: | :--- | :---: | :--- | :--- | :--- | :--- |
+| ip | 192.168.1.1 | 301/302 | [https://google.com](https://google.com) | 前\(req\) |  |  |
+| url | ^[https://api.b.com/v2](https://api.b.com/v2) | JS | file.js | 后\(res\) |  |  |
+| host | api.bilibili.com | useragent | iPhone 6s |  |  |  |
+| useragent | neteaseMusic | aliApp | block | reject | tinyimg |  |
+| reqmethod | GET | POST | PUT | DELETE | $HOLD | 30 |
+| reqbody | queryPara | word string |  |  |  |  |
+| resstatus | 200 | 404 | 301 | ... |  |  |
+| restype | text/html | text/json | ----- |  |  |  |
+| resbody | Keyword\(string\) | all - JS |  |  |  |  |
 
 保存后，根据表格内容自动生成 **default.list**
 
-```
+```text
 [elecV2P rules]
 ip,192.168.1.1,301,https://google.com,req
 url,^https://api.b.com/v2,js,file.js,res
@@ -35,7 +36,7 @@ resbody,key string,301,google.com,res
 
 ## 匹配方式
 
-```
+```text
 ip              // 匹配 IP 
 url             // 匹配 url 
 host            // 匹配 url host 部分
@@ -61,8 +62,7 @@ resbody         // 匹配 返回的数据内容
 
 ### 阻止
 
-reject: 返回状态码 200, body 为空。 
-tinyimg: 返回状态码为 200, body 为一张 1x1 的图片
+reject: 返回状态码 200, body 为空。 tinyimg: 返回状态码为 200, body 为一张 1x1 的图片
 
 ### $HOLD
 
@@ -80,7 +80,6 @@ $HOLD request reject - 直接返回当前数据
 
 数据包含两部分： header 和 body
 
-
 ### User-Agent
 
 修改请求 header 中的 User-Agent。
@@ -96,3 +95,4 @@ beforeSendRequest
 ### 数据返回前
 
 beforeSendResponse
+

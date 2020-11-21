@@ -1,4 +1,6 @@
-```
+# 01-overview
+
+```text
 最近更新： 2020-8-16
 适用版本： 2.4.3
 ```
@@ -9,32 +11,33 @@
 
 ### 基础功能
 
-- 查看/修改 网络请求 (MITM)
-- 运行 JS 脚本
-- 定时任务（倒计时/cron 定时）
-- FEED/IFTTT 通知
+* 查看/修改 网络请求 \(MITM\)
+* 运行 JS 脚本
+* 定时任务（倒计时/cron 定时）
+* FEED/IFTTT 通知
 
 ## 安装/install
 
-*软件开放权限较大，建议局域网使用。网络部署，风险自负*
+_软件开放权限较大，建议局域网使用。网络部署，风险自负_
 
 ### nodejs （不推荐）
 
-``` sh
+```bash
 yarn
 yarn start
 ```
 
 ### docker
 
-``` sh
+```bash
 docker run --restart=always -d --name elecv2p -p 80:80 -p 8001:8001 -p 8002:8002 elecv2/elecv2p
 ```
 
 ### docker-compose （推荐）
 
 docker-compose.yaml
-```
+
+```text
 version: '3.7'
 services:
   elecv2p:
@@ -52,15 +55,15 @@ services:
       - "/elecv2p/Store:/usr/local/app/script/Store"
 ```
 
-``` sh
+```bash
 docker-compose up -d
 ```
 
 ## 端口说明
 
-- 80：    软件主界面。添加规则/JS 文件管理/定时任务管理/MITM 证书 等
-- 8001：  anyproxy 代理端口
-- 8002：  anyproxy 连接查看
+* 80：    软件主界面。添加规则/JS 文件管理/定时任务管理/MITM 证书 等
+* 8001：  anyproxy 代理端口
+* 8002：  anyproxy 连接查看
 
 ## 使用说明
 
@@ -70,9 +73,9 @@ docker-compose up -d
 
 选择以下任一种方式下载证书，然后安装信任证书
 
-- 直接打开 :80/crt
-- :80 -> MITM -> 安装证书
-- :8001 -> RootCA
+* 直接打开 :80/crt
+* :80 -&gt; MITM -&gt; 安装证书
+* :8001 -&gt; RootCA
 
 根证书位于 `$HOME/.anyproxy/certificates` 目录，可用自签证书替换
 
@@ -80,8 +83,8 @@ docker-compose up -d
 
 任选一种方式
 
-- 将根证书（rootCA.crt/rootCA.key）复制到本项目 **rootCA** 目录，然后 :80 -> MITM -> 启用自签证书
-- 直接将根证书复制到 **$HOME/.anyproxy/certificates** 目录下
+* 将根证书（rootCA.crt/rootCA.key）复制到本项目 **rootCA** 目录，然后 :80 -&gt; MITM -&gt; 启用自签证书
+* 直接将根证书复制到 **$HOME/.anyproxy/certificates** 目录下
 
 使用新的证书后，记得重新下载安装信任，并清除由之前根证书签发的域名证书。
 
@@ -96,37 +99,35 @@ docker-compose up -d
 ![task](https://raw.githubusercontent.com/elecV2/elecV2P-dei/master/docs/res/task.png)
 
 目前支持两种定时方式：
-- 倒计时 schedule
-- 定时 cron
+
+* 倒计时 schedule
+* 定时 cron
 
 ### 时间格式：
 
-- 倒计时 30 999 3 2  (以空格分开的四个数字，后三项可省略)
+* 倒计时 30 999 3 2  \(以空格分开的四个数字，后三项可省略\)
 
-|    30（秒）    |     999（次）   |      3（秒）         |       2（次）       
-:--------------: | :-------------: | :------------------: | :------------------:
-| 基础倒计时时间 | 重复次数（可选）| 增加随机时间（可选） | 增加随机重复次数（可选）  
+| 30（秒） | 999（次） | 3（秒） | 2（次） |
+| :---: | :---: | :---: | :---: |
+| 基础倒计时时间 | 重复次数（可选） | 增加随机时间（可选） | 增加随机重复次数（可选） |
 
-
-*当重复次数大于等于 **999** 时，无限循环。*
+_当重复次数大于等于 **999** 时，无限循环。_
 
 示例： 400 8 10 3 ，表示倒计时40秒，随机10秒，所以具体倒计时时间位于 40-50 秒之间，重复运行 8-11 次
 
-- cron 定时 
+* cron 定时 
 
-时间格式：* * * * * * （五/六位 cron 时间格式）
+时间格式： __  __  __ （五/六位 cron 时间格式）
 
-
-| * (0-59)   |  * (0-59)  |  * (0-23)  |  * (1-12)  |  * (1-31)  |  * (0-7)      
-:----------: | :--------: | :--------: | :--------: | :--------: | :---------:
-| 秒（可选） |    分      |    小时    |      月    |     日     |    星期
-
+| \* \(0-59\) | \* \(0-59\) | \* \(0-23\) | \* \(1-12\) | \* \(1-31\) | \* \(0-7\) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 秒（可选） | 分 | 小时 | 月 | 日 | 星期 |
 
 ### 可执行任务类型
 
-- 运行 JS
-- 开始/停止 其他定时任务
-- exec 命令。参考： [child_process_exec](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback)
+* 运行 JS
+* 开始/停止 其他定时任务
+* exec 命令。参考： [child\_process\_exec](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback)
 
 ## 通知
 
@@ -138,8 +139,8 @@ ifttt 通知需先在设置（setting）面板添加 key。目前 ifttt 通知�
 
 通知内容：
 
-- 定时任务开始/结束
-- 定时任务 JS 运行次数（默认运行 50 次通知一次）
+* 定时任务开始/结束
+* 定时任务 JS 运行次数（默认运行 50 次通知一次）
 
 ## docs
 
@@ -147,14 +148,15 @@ ifttt 通知需先在设置（setting）面板添加 key。目前 ifttt 通知�
 
 ### 简单声明
 
-*该项目仅用于学习交流，任何使用，风险自负。*
+_该项目仅用于学习交流，任何使用，风险自负。_
 
 ## 贡献
 
-- [anyproxy](https://github.com/alibaba/anyproxy)
-- [axios](https://github.com/axios/axios)
-- [expressjs](https://expressjs.com)
-- [node-cron](https://github.com/merencia/node-cron)
-- [node-rss](https://github.com/dylang/node-rss)
-- [vue](http://vuejs.org/)
-- [Ant Design Vue](https://www.antdv.com)
+* [anyproxy](https://github.com/alibaba/anyproxy)
+* [axios](https://github.com/axios/axios)
+* [expressjs](https://expressjs.com)
+* [node-cron](https://github.com/merencia/node-cron)
+* [node-rss](https://github.com/dylang/node-rss)
+* [vue](http://vuejs.org/)
+* [Ant Design Vue](https://www.antdv.com)
+

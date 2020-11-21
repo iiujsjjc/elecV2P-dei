@@ -1,22 +1,24 @@
-```
+# 09-webhook
+
+```text
 最近更新： 2020-8-22
 适用版本： 2.4.6
 ```
 
 ## 功能
 
-- 运行 JS
-- 删除 日志
-- 获取运行状态 status
-- 获取定时任务信息
-- 开始/暂停 定时任务
-- 添加定时任务
+* 运行 JS
+* 删除 日志
+* 获取运行状态 status
+* 获取定时任务信息
+* 开始/暂停 定时任务
+* 添加定时任务
 
 ## 使用
 
-假如网页地址为： http://192.168.1.102:12521
+假如网页地址为： [http://192.168.1.102:12521](http://192.168.1.102:12521)
 
-首先访问 webUI -> setting，获取 webhook token.
+首先访问 webUI -&gt; setting，获取 webhook token.
 
 webhook 可通过 GET/PUT/POST 三种请求方式触发。
 
@@ -24,24 +26,13 @@ webhook 可通过 GET/PUT/POST 三种请求方式触发。
 
 GET 方式通过 url 传递相关参数，比如运行 JS，直接访问以下链接即可
 
-** http://192.168.1.102:12521/webhook?token=a8c259b2-67fe-D-7bfdf1f55cb3&type=runjs&fn=webhook.js **
+ ****[http://192.168.1.102:12521/webhook?token=a8c259b2-67fe-D-7bfdf1f55cb3&type=runjs&fn=webhook.js](http://192.168.1.102:12521/webhook?token=a8c259b2-67fe-D-7bfdf1f55cb3&type=runjs&fn=webhook.js) ****
 
 PUT 或者 POST, 以 fetch 函数为例
 
-``` JS webhook
-fetch('http://192.168.1.102:12521/webhook', {
-  method: 'put',     // or post
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    token: 'a8c259b2-67fe-D-7bfdf1f55cb3',
-    type: 'runjs',
-    fn: 'webhook.js'        // 支持远程 JS, 比如：https://raw.githubusercontent.com/elecV2/elecV2P/master/script/JSFile/webhook.js。
-  })
-}).then(res=>res.text()).then(s=>console.log(s))
-```
+\`\`\` JS webhook fetch\('[http://192.168.1.102:12521/webhook](http://192.168.1.102:12521/webhook)', { method: 'put', // or post headers: { 'Content-Type': 'application/json' }, body: JSON.stringify\({ token: 'a8c259b2-67fe-D-7bfdf1f55cb3', type: 'runjs', fn: 'webhook.js' // 支持远程 JS, 比如：[https://raw.githubusercontent.com/elecV2/elecV2P/master/script/JSFile/webhook.js。](https://raw.githubusercontent.com/elecV2/elecV2P/master/script/JSFile/webhook.js。) }\) }\).then\(res=&gt;res.text\(\)\).then\(s=&gt;console.log\(s\)\)
 
+```text
 - 如果是远程 JS 会强制下载
 - 支持使用 rename 参数，修改远程 JS 下载后的文件名
 
@@ -85,4 +76,5 @@ fetch('http://192.168.1.102:12521/webhook', {
 }).then(res=>res.text()).then(s=>console.log(s))
 ```
 
-task 格式参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md
+task 格式参考：[https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md](https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md)
+
